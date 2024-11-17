@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+      "_id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
       "username": "john_doe",
       "email": "john.doe@example.com",
       "password": "securepassword123",
@@ -21,7 +21,7 @@
       ]
     },
     {
-      "id": "e467b9f3-8d78-4ab3-90ed-708f317d13f4",
+      "_id": "e467b9f3-8d78-4ab3-90ed-708f317d13f4",
       "username": "jane_smith",
       "email": "jane.smith@example.com",
       "password": "anothersecurepassword456",
@@ -32,9 +32,57 @@
         "location": "Los Angeles",
         "profile_picture": "https://example.com/images/jane_smith.png"
       },
-      "challenges_completed": []
+      "challenges_completed": [
+        {
+          "challenge_id": "w9j2n3",
+          "completed_at": "2024-11-20T16:15:00",
+          "reward": []
+        }
+      ]
     }
   ],
-  "Reward":[
+  "Reward": [
+    {
+      "_id": "kmxkk01",
+      "user_id": "e467b9f3-8d78-4ab3-90ed-708f317d13f4",
+      "challenge_id": "w9j2n3",
+      "reward_type": "Test1",
+      "reward_details": {
+        "coupon_code": "322la",
+        "discount_percentage": 20
+      },
+      "claimed_at": "2024-09-10T16:15:00",
+      "status": "completed"
+    }
+  ],
+  "Challenges": [
+    {
+      "id": "ol10q",
+      "business_id": "bus1",
+      "title": "Challenge1",
+      "description": "Desc Challenge 1",
+      "start_date": "-",
+      "end_date": "--",
+      "requirements": [],
+      "mediaTypes": [],
+      "rewards": {
+        "type": "type1",
+        "details": "detail1"
+      }
+    },
+    {
+      "id": "w9j2n3",
+      "business_id": "bus2",
+      "title": "Challenge2",
+      "description": "Desc Challenge 2",
+      "start_date": "-",
+      "end_date": "--",
+      "requirements": [],
+      "mediaTypes": [],
+      "rewards": {
+        "type": "type2",
+        "details": "detail2"
+      }
+    }
   ]
 }

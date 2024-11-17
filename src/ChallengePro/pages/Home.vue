@@ -2,10 +2,19 @@
 import {mapGetters} from 'vuex';
 import {Toolbar} from "primevue";
 import {Button} from "primevue";
+import {Card} from "primevue";
+import {ChallengesService} from "@/ChallengePro/services/challenges.service.js";
 
 export default {
   name: "Home",
-  components: {Toolbar, Button},
+  components: {Toolbar, Button, Card},
+  data() {
+    return {
+      arrayMyChallenges: [],
+      arrayChallenges: [],
+      AllChallenges: []
+    }
+  },
   computed: {
     ...mapGetters(['getUser']),
   },
@@ -15,6 +24,16 @@ export default {
       this.$store.dispatch('logout');
       this.$router.push('/login');
     },
+  },
+  async mounted() {
+    const service = new ChallengesService();
+    this.arrayChallenges = this.getUser.challenges_completed;
+    this.arrayMyChallenges = await service.getMyChallenges(this.arrayChallenges);
+
+    console.log(this.arrayMyChallenges);
+
+    this.AllChallenges = await service.getAllChallenges();
+
   }
 }
 </script>
@@ -32,14 +51,50 @@ export default {
       <h1>Bienvenido, {{ getUser?.profile?.name }}</h1>
       <p>Email: {{ getUser?.email }}</p>
     </div>
-    <div class = my-challenges>
-      <
+    <div class=challenges>
+
+      <div class="completed">
+        <div v-for="challenge in arrayMyChallenges" :key="challenge.id" class="challenge-card">
+          <Card>
+            <template #header>
+              <h3>{{ challenge.title }}</h3>
+            </template>
+            <template #content>
+              <p>{{ challenge.description }}</p>
+              <p><strong>Fecha de inicio:</strong> {{ challenge.start_date || "No especificada" }}</p>
+              <p><strong>Fecha de fin:</strong> {{ challenge.end_date || "No especificada" }}</p>
+              <p><strong>Recompensa:</strong> {{ challenge.rewards.details || "No hay recompensa" }}</p>
+            </template>
+          </Card>
 
 
+        </div>
 
+      </div>
+      <div class="to-complete">
+        <h2>Desafíos Completados</h2>
+        <div v-if="AllChallenges.length === 0">
+          <p>No se encontraron desafíos.</p>
+        </div>
+        <div v-else>
 
-
+          <div v-for="challenge in AllChallenges" :key="challenge.id" class="challenge-card">
+            <Card>
+              <template #header>
+                <h3>{{ challenge.title }}</h3>
+              </template>
+              <template #content>
+                <p>{{ challenge.description }}</p>
+                <p><strong>Fecha de inicio:</strong> {{ challenge.start_date || "No especificada" }}</p>
+                <p><strong>Fecha de fin:</strong> {{ challenge.end_date || "No especificada" }}</p>
+                <p><strong>Recompensa:</strong> {{ challenge.rewards.details || "No hay recompensa" }}</p>
+              </template>
+            </Card>
+          </div>
+        </div>
+      </div>
     </div>
+
 
   </div>
 </template>
